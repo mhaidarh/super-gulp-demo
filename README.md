@@ -14,19 +14,19 @@ npm install
 Original commands:
 
 ```sh
-gulp
-gulp test
-gulp watch
-gulp build
+gulp # use this by default
+gulp test  # unavailable
+gulp watch # watch changes of *.html, *.js, *.sass in src/
+gulp build # unavailable
 ```
 
 Aliasing `gulp` with `npm` for easy commands:
 
 ```sh
-npm start
-npm test
-npm run watch
-npm run build
+npm start     # gulp
+npm test      # gulp test
+npm run watch # gulp watch
+npm run build # gulp build
 ```
 
 ## Development
@@ -43,4 +43,3 @@ Tasks
 ## License
 
 MIT
-

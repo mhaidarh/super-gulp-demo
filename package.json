@@ -4,8 +4,8 @@
   "description": "Super gulp demo",
   "main": "index.js",
   "scripts": {
-    "start": "live-server client",
-    "test": "mocha"
+    "start": "gulp",
+    "test": "gulp"
   },
   "repository": {
     "type": "git",
