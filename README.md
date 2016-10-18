@@ -5,7 +5,7 @@ Super Gulp demo.
 ## Installation
 
 ```sh
-npm install -g gulp-cli
+npm install -g gulp
 npm install
 ```
 
