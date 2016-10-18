@@ -11,12 +11,12 @@ gulp.task('default', ['watch'], function() {
 
 // configure the jshint task
 gulp.task('jshint', function() {
-  return gulp.src('src/scripts/**/*.js')
+  return gulp.src('src/scripts/*.js')
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
 // configure which files to watch and what tasks to use on file changes
 gulp.task('watch', function() {
-  gulp.watch('src/scripts/**/*.js', ['jshint']);
+  gulp.watch('src/scripts/*.js', ['jshint']);
 });
