@@ -1,3 +1,3 @@
-const GRAVITY = 10
+const SWEETNESS = 100
 
-console.log(GRAVITY)
+console.log(`Sweetness: ${SWEETNESS}`)

@@ -7,9 +7,15 @@ const sass = require('gulp-sass')
 const sourcemaps = require('gulp-sourcemaps')
 
 // define the default task with log message
-gulp.task('default', ['standard', 'build-sass', 'watch'], function () {
+gulp.task('default', ['copy-html', 'standard', 'build-sass', 'watch'], function () {
 	return gutil.log('[info]'.blue, 'Gulp is running...!')
 })
+
+// copy any html files in src/ to _dist/
+gulp.task('copy-html', function () {
+	gutil.log('[info]'.yellow, 'Copy HTML to _dist/...')
+	gulp.src('src/*.html').pipe(gulp.dest('_dist'));
+});
 
 // configure the standard.js task
 gulp.task('standard', function () {
@@ -29,12 +35,13 @@ gulp.task('build-sass', function () {
 		.pipe(sourcemaps.init()) // Process the original sources
 		.pipe(sass())
 		.pipe(sourcemaps.write()) // Add the map to modified source.
-		.pipe(gulp.dest('public/assets/styles'))
+		.pipe(gulp.dest('_dist/assets/styles'))
 })
 
 // configure which files to watch and what tasks to use on file changes
 gulp.task('watch', function () {
 	gutil.log('[info]'.green, 'Watching some files...')
+	gulp.watch('src/*.html', ['copy-html'])
 	gulp.watch('src/scripts/*.js', ['standard'])
 	gulp.watch('src/styles/*.scss', ['build-sass'])
 })
