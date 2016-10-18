@@ -35,9 +35,9 @@ npm run build
 
 Tasks
 
-* `gulp.task`: points to the files we want to use.
-* `gulp.src`:
-* `gulp.dest`:
+* `gulp.task`: defines your tasks. Its arguments are name, deps and fn.
+* `gulp.src`: points to the files we want to use.
+* `gulp.dest`: points to the output folder we want to write files to
 * `gulp.watch`:
 
 ## License

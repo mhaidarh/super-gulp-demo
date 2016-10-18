@@ -7,3 +7,8 @@ const gulp  = require('gulp'),
 gulp.task('default', function() {
   return gutil.log('[info]'.blue, 'Gulp is running...!')
 })
+
+gulp.task('copy-html', function() {
+  // copy any html files in source/ to public/
+  gulp.src('source/*.html').pipe(gulp.dest('public'));
+});
