@@ -4,6 +4,7 @@ const gulp = require('gulp')
 const gutil = require('gulp-util')
 const standard = require('gulp-standard')
 const sass = require('gulp-sass')
+const sourcemaps = require('gulp-sourcemaps')
 
 // define the default task with log message
 gulp.task('default', ['standard', 'build-sass', 'watch'], function () {
@@ -25,13 +26,15 @@ gulp.task('standard', function () {
 gulp.task('build-sass', function () {
 	gutil.log('[info]'.yellow, 'Build Sass to CSS...')
 	return gulp.src('src/styles/*.sass')
+		.pipe(sourcemaps.init()) // Process the original sources
 		.pipe(sass())
-		.pipe(gulp.dest('public/assets/styles'));
-});
+		.pipe(sourcemaps.write()) // Add the map to modified source.
+		.pipe(gulp.dest('public/assets/styles'))
+})
 
 // configure which files to watch and what tasks to use on file changes
 gulp.task('watch', function () {
 	gutil.log('[info]'.green, 'Watching some files...')
 	gulp.watch('src/scripts/*.js', ['standard'])
-	gulp.watch('src/styles/*.scss', ['build-sass']);
+	gulp.watch('src/styles/*.scss', ['build-sass'])
 })
