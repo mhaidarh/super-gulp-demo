@@ -1,3 +1,4 @@
-const SWEETNESS = 100
+const human = require('./human')
 
-console.log(`Sweetness: ${SWEETNESS}`)
+human.eat(99)
+human.drink(49)
