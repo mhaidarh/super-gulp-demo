@@ -96,7 +96,7 @@ gulp.task('watch-test', function () {
     }
   })
   gulp.watch('*.test.html').on('change', browserSync.reload)
-  gulp.watch('scripts/*.test.js', ['standard'])
+  gulp.watch('scripts/*.test.js').on('change', browserSync.reload)
 })
 
 /*
