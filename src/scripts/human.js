@@ -1,11 +1,9 @@
 let human = {
   eat: (ENERGY = 100) => {
-    console.log(`Eating...`)
-    console.log(`-- Energy: +${ENERGY}%`)
+    return `Eating... Energy: +${ENERGY}%`
   },
   drink: (SWEETNESS = 50) => {
-    console.log(`Drinking...`)
-    console.log(`-- Sweetness: +${SWEETNESS}%`)
+    return `Drinking... Sweetness: +${SWEETNESS}%`
   }
 }
 

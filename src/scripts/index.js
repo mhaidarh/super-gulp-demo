@@ -1,4 +1,4 @@
 const human = require('./human')
 
-human.eat(99)
-human.drink(49)
+console.log(human.eat(200))
+console.log(human.drink(20))

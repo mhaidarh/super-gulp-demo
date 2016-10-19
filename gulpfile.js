@@ -15,13 +15,15 @@ gulp.task('default', ['copy-html', 'standard', 'build-sass', 'watch'], function 
 // copy any html files in src/ to _dist/
 gulp.task('copy-html', function () {
   gutil.log('[process]'.yellow, 'Copy HTML to _dist/...')
-  gulp.src('src/*.html').pipe(gulp.dest('_dist'))
+  gulp.src(['src/*.html', '!src/mocha.html']).pipe(gulp.dest('_dist'))
 })
 
 // configure the standard.js task
 gulp.task('standard', function () {
   gutil.log('[process]'.yellow, 'Check standard...')
-  return gulp.src(['src/scripts/*.js'])
+
+  // include program files, exclude test files
+  return gulp.src(["src/scripts/*.js", "!src/scripts/*.test.js"])
     .pipe(standard())
     .pipe(standard.reporter('default', {
       breakOnError: true,
@@ -32,7 +34,9 @@ gulp.task('standard', function () {
 // concatenate javascript files
 gulp.task('build-js', function () {
   gutil.log('[process]'.yellow, 'Concatenate scripts...')
-  return gulp.src('src/scripts/**/*.js')
+
+  // include program files, exclude test files
+  return gulp.src(["src/scripts/*.js", "!src/scripts/*.test.js"])
     .pipe(sourcemaps.init())
     .pipe(concat('bundle.js'))
     // only uglify if gulp is ran with '--type production'
