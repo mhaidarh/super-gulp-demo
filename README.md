@@ -14,10 +14,10 @@ npm install
 Original commands:
 
 ```sh
-gulp # use this by default
-gulp test  # unavailable
-gulp watch # watch changes of *.html, *.js, *.sass in src/
-gulp build # unavailable
+gulp # copy, lint, build css, watch (+browser-sync)
+gulp test  # test with mocha in browser (+browser-sync)
+gulp watch # watch changes of *.html, *.js, *.sass|*.scss|*.less|*.styl
+gulp build # default build without watch
 ```
 
 Aliasing `gulp` with `npm` for easy commands:
