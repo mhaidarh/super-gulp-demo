@@ -14,7 +14,7 @@ const browserSync = require('browser-sync').create()
 */
 
 // define the default task with log message
-gulp.task('default', ['copy-html', 'standard', 'build-sass', 'watch'], function () {
+gulp.task('default', ['copy-html', 'standard-js', 'build-js', 'build-sass', 'watch'], function () {
   return gutil.log('[info]'.blue, 'Gulp is running...!')
 })
 
@@ -25,7 +25,7 @@ gulp.task('copy-html', function () {
 })
 
 // configure the standard.js task
-gulp.task('standard', function () {
+gulp.task('standard-js', function () {
   gutil.log('[process]'.yellow, 'Check standard...')
 
   // include program files, exclude test files
@@ -44,11 +44,11 @@ gulp.task('build-js', function () {
   // include program files, exclude test files
   return gulp.src(["scripts/*.js", "!scripts/*.test.js"])
     .pipe(sourcemaps.init())
-    .pipe(concat('bundle.js'))
+    // .pipe(concat('bundle.js'))
     // only uglify if gulp is ran with '--type production'
     .pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('_dist/assets/scripts'))
+    .pipe(gulp.dest('_dist/scripts'))
 })
 
 // sass to css
@@ -71,7 +71,7 @@ gulp.task('watch', function () {
     }
   })
   gulp.watch('*.html', ['copy-html']).on('change', browserSync.reload)
-  gulp.watch('scripts/*.js', ['standard'])
+  gulp.watch('scripts/*.js', ['standard-js', 'build-js'])
   gulp.watch('styles/*.sass', ['build-sass'])
 })
 
@@ -82,7 +82,7 @@ gulp.task('watch', function () {
 */
 
 // define the test task with log message
-gulp.task('test', ['standard', 'watch-test'], function () {
+gulp.task('test', ['standard-js', 'watch-test'], function () {
   return gutil.log('[info]'.blue, 'Gulp is testing...!')
 })
 
