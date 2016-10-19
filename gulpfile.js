@@ -62,6 +62,13 @@ gulp.task('build-sass', function () {
     .pipe(browserSync.stream())
 })
 
+// create a task that ensures the `js` task is complete before
+// reloading browsers
+gulp.task('watch-js', ['standard-js', 'build-js'], function (done) {
+  browserSync.reload()
+  done()
+})
+
 // configure which files to watch and what tasks to use on file changes
 gulp.task('watch', function () {
   gutil.log('[info]'.blue, 'Serving and watching some files...')
@@ -71,7 +78,7 @@ gulp.task('watch', function () {
     }
   })
   gulp.watch('*.html', ['copy-html']).on('change', browserSync.reload)
-  gulp.watch('scripts/*.js', ['standard-js', 'build-js'])
+  gulp.watch('scripts/*.js', ['watch-js'])
   gulp.watch('styles/*.sass', ['build-sass'])
 })
 
