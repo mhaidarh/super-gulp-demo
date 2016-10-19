@@ -18,10 +18,10 @@ gulp.task('default', ['copy-html', 'standard', 'build-sass', 'watch'], function 
   return gutil.log('[info]'.blue, 'Gulp is running...!')
 })
 
-// copy any html files in src/ to _dist/
+// copy any html files in  to _dist/
 gulp.task('copy-html', function () {
   gutil.log('[process]'.yellow, 'Copy HTML to _dist/...')
-  gulp.src(['src/*.html', '!src/*.test.html']).pipe(gulp.dest('_dist'))
+  gulp.src(['*.html', '!*.test.html']).pipe(gulp.dest('_dist'))
 })
 
 // configure the standard.js task
@@ -29,7 +29,7 @@ gulp.task('standard', function () {
   gutil.log('[process]'.yellow, 'Check standard...')
 
   // include program files, exclude test files
-  return gulp.src(["src/scripts/*.js", "!src/scripts/*.test.js"])
+  return gulp.src(["scripts/*.js", "!scripts/*.test.js"])
     .pipe(standard())
     .pipe(standard.reporter('default', {
       breakOnError: true,
@@ -42,7 +42,7 @@ gulp.task('build-js', function () {
   gutil.log('[process]'.yellow, 'Concatenate scripts...')
 
   // include program files, exclude test files
-  return gulp.src(["src/scripts/*.js", "!src/scripts/*.test.js"])
+  return gulp.src(["scripts/*.js", "!scripts/*.test.js"])
     .pipe(sourcemaps.init())
     .pipe(concat('bundle.js'))
     // only uglify if gulp is ran with '--type production'
@@ -54,11 +54,11 @@ gulp.task('build-js', function () {
 // sass to css
 gulp.task('build-sass', function () {
   gutil.log('[info]'.yellow, 'Compile Sass to CSS...')
-  return gulp.src('src/styles/*.sass')
+  return gulp.src('styles/*.sass')
     .pipe(sourcemaps.init()) // Process the original sources
     .pipe(sass())
     .pipe(sourcemaps.write()) // Add the map to modified source.
-    .pipe(gulp.dest('_dist/assets/styles'))
+    .pipe(gulp.dest('_dist/styles'))
     .pipe(browserSync.stream())
 })
 
@@ -70,9 +70,9 @@ gulp.task('watch', function () {
       baseDir: "_dist"
     }
   })
-  gulp.watch('src/*.html', ['copy-html']).on('change', browserSync.reload)
-  gulp.watch('src/scripts/*.js', ['standard'])
-  gulp.watch('src/styles/*.scss', ['build-sass'])
+  gulp.watch('*.html', ['copy-html']).on('change', browserSync.reload)
+  gulp.watch('scripts/*.js', ['standard'])
+  gulp.watch('styles/*.sass', ['build-sass'])
 })
 
 /*
@@ -91,11 +91,12 @@ gulp.task('watch-test', function () {
   gutil.log('[info]'.blue, 'Serving and watching some test files...')
   browserSync.init({
     server: {
-      baseDir: "src"
+      baseDir: "./",
+      index: "index.test.html"
     }
   })
-  gulp.watch('src/*.test.html').on('change', browserSync.reload)
-  gulp.watch('src/scripts/*.test.js', ['standard'])
+  gulp.watch('*.test.html').on('change', browserSync.reload)
+  gulp.watch('scripts/*.test.js', ['standard'])
 })
 
 /*
