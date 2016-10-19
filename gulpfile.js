@@ -7,6 +7,12 @@ const sass = require('gulp-sass')
 const sourcemaps = require('gulp-sourcemaps')
 const browserSync = require('browser-sync').create()
 
+/*
+  ------------------------------------------------------------------------------
+  Default Area
+  ------------------------------------------------------------------------------
+*/
+
 // define the default task with log message
 gulp.task('default', ['copy-html', 'standard', 'build-sass', 'watch'], function () {
   return gutil.log('[info]'.blue, 'Gulp is running...!')
@@ -15,7 +21,7 @@ gulp.task('default', ['copy-html', 'standard', 'build-sass', 'watch'], function 
 // copy any html files in src/ to _dist/
 gulp.task('copy-html', function () {
   gutil.log('[process]'.yellow, 'Copy HTML to _dist/...')
-  gulp.src(['src/*.html', '!src/mocha.html']).pipe(gulp.dest('_dist'))
+  gulp.src(['src/*.html', '!src/*.test.html']).pipe(gulp.dest('_dist'))
 })
 
 // configure the standard.js task
@@ -67,4 +73,38 @@ gulp.task('watch', function () {
   gulp.watch('src/*.html', ['copy-html']).on('change', browserSync.reload)
   gulp.watch('src/scripts/*.js', ['standard'])
   gulp.watch('src/styles/*.scss', ['build-sass'])
+})
+
+/*
+  ------------------------------------------------------------------------------
+  Test Area
+  ------------------------------------------------------------------------------
+*/
+
+// define the test task with log message
+gulp.task('test', ['standard', 'watch-test'], function () {
+  return gutil.log('[info]'.blue, 'Gulp is testing...!')
+})
+
+// configure which files to watch and what tasks to use on file changes
+gulp.task('watch-test', function () {
+  gutil.log('[info]'.blue, 'Serving and watching some test files...')
+  browserSync.init({
+    server: {
+      baseDir: "src"
+    }
+  })
+  gulp.watch('src/*.test.html').on('change', browserSync.reload)
+  gulp.watch('src/scripts/*.test.js', ['standard'])
+})
+
+/*
+  ------------------------------------------------------------------------------
+  Build Area
+  ------------------------------------------------------------------------------
+*/
+
+// define the build task with log message
+gulp.task('build', ['copy-html', 'build-sass'], function () {
+  return gutil.log('[info]'.blue, 'Gulp is building...!')
 })
