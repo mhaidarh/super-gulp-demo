@@ -3,6 +3,8 @@ const colors = require('colors')
 const gulp = require('gulp')
 const gutil = require('gulp-util')
 const standard = require('gulp-standard')
+const concat = require('gulp-concat')
+const uglify = require('gulp-uglifyjs')
 const sass = require('gulp-sass')
 const sourcemaps = require('gulp-sourcemaps')
 const browserSync = require('browser-sync').create()
@@ -44,9 +46,10 @@ gulp.task('build-js', function () {
   // include program files, exclude test files
   return gulp.src(["scripts/*.js", "!scripts/*.test.js"])
     .pipe(sourcemaps.init())
-    // .pipe(concat('bundle.js'))
+    .pipe(concat('bundle.js'))
     // only uglify if gulp is ran with '--type production'
-    .pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
+    // .pipe(uglify())
+    // .pipe(gutil.env.type === 'production' ? uglify() : gutil.noop())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('_dist/scripts'))
 })
@@ -56,7 +59,8 @@ gulp.task('build-sass', function () {
   gutil.log('[info]'.yellow, 'Compile Sass to CSS...')
   return gulp.src('styles/*.sass')
     .pipe(sourcemaps.init()) // Process the original sources
-    .pipe(sass())
+    .pipe(concat('bundle.sass'))
+    .pipe(sass({ outputStyle: 'compressed' }))
     .pipe(sourcemaps.write()) // Add the map to modified source.
     .pipe(gulp.dest('_dist/styles'))
     .pipe(browserSync.stream())

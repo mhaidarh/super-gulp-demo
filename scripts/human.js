@@ -6,5 +6,4 @@ let human = {
     return `[Drinking...] Hidration: ${HIDRATION}%`
   }
 }
-
 human
